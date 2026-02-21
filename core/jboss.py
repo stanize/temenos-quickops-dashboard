@@ -10,7 +10,12 @@ class CmdResult:
 
 def run(cmd: list[str], timeout: int = 30) -> CmdResult:
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
-    return CmdResult(p.returncode == 0, p.returncode, (p.stdout or "").strip(), (p.stderr or "").strip())
+    return CmdResult(
+        ok=(p.returncode == 0),
+        returncode=p.returncode,
+        stdout=(p.stdout or "").strip(),
+        stderr=(p.stderr or "").strip(),
+    )
 
 def is_active(service_name="jboss") -> bool:
     r = run(["systemctl", "is-active", service_name], timeout=10)
@@ -21,4 +26,3 @@ def status(service_name="jboss") -> CmdResult:
 
 def start(service_name="jboss") -> CmdResult:
     return run(["sudo", "systemctl", "start", service_name], timeout=90)
-

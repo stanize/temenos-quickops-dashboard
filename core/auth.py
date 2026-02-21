@@ -6,11 +6,6 @@ class AuthResult:
     message: str = ""
 
 def dummy_validate(username: str, password: str) -> AuthResult:
-    """
-    Dummy validation rules:
-    - username must not be empty
-    - password must equal: demo123
-    """
     u = (username or "").strip()
     p = password or ""
 
@@ -20,3 +15,4 @@ def dummy_validate(username: str, password: str) -> AuthResult:
         return AuthResult(False, "Invalid password (hint: demo123).")
 
     return AuthResult(True, "Login OK (dummy).")
+
