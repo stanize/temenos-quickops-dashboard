@@ -2,9 +2,6 @@
 __pycache__/
 *.pyc
 
-.streamlit/secrets.toml
-config/config.yaml
-
 data/*.db
 data/*.sqlite
 
