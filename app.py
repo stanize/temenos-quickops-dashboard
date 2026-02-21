@@ -1,20 +1,17 @@
 import streamlit as st
+from core import jboss
 
 st.set_page_config(page_title="Temenos QuickOps", layout="centered")
 
-# Initialize session auth state
+# Init auth state (even if not used yet)
 if "auth" not in st.session_state:
     st.session_state["auth"] = {"logged_in": False, "user": None}
 
-# Guard: must be logged in
-if not st.session_state["auth"]["logged_in"]:
+SERVICE = "jboss"
+
+# ROUTER
+if not jboss.is_active(SERVICE):
+    st.switch_page("pages/0_Start_JBoss.py")
+else:
     st.switch_page("pages/1_Login.py")
 
-st.title("Temenos QuickOps")
-st.write(f"✅ Logged in as: **{st.session_state['auth']['user']}**")
-
-if st.button("Logout"):
-    st.session_state["auth"] = {"logged_in": False, "user": None}
-    st.switch_page("pages/1_Login.py")
-
-st.info("Next: add JBoss status + restart page.")
